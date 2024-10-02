@@ -1,22 +1,22 @@
 package main;
 
-import dao.PersonaDao;
+import daoImpl.PersonaDaoImpl;
 import entidad.Persona;
 
-public class main
+public class Main
 {
 	public static void main(String[] args)
 	{
-		PersonaDao personaDao = new PersonaDao();
+		PersonaDaoImpl personaDao = new PersonaDaoImpl();
 		Persona persona = new Persona();
 		
 		persona.setDni("34294954");
 		persona.setNombre("Carlos");
 		persona.setApellido("Berligieri");
 		
-		int rows = personaDao.agregar(persona);
+		boolean exito = personaDao.agregar(persona);
 		
-		if (0 < rows)
+		if (exito)
 		{
 			System.out.println("SAPE!");
 		}
