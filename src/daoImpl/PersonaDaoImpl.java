@@ -9,7 +9,7 @@ import entidad.Persona;
 
 public class PersonaDaoImpl implements PersonaDao 
 {
-	String insertQry;
+	private String insertQry;
 	
 	public PersonaDaoImpl()
 	{
