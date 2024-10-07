@@ -15,6 +15,8 @@ public class Main {
 		PersonaDaoImpl personaDao = new PersonaDaoImpl();
 		Persona persona = new Persona();
 		Persona persona1 = new Persona();
+		ArrayList<Persona> listaAux = new ArrayList<>();
+		listaAux = personaDao.readAll();
 		/*
 		persona.setDni("34294954");
 		persona.setNombre("Carlos");
@@ -35,9 +37,16 @@ public class Main {
 		
 		//boolean exito = personaDao.eliminar(persona);
 		
+		//voy a sobreescribir esta persona, uso metodo modificar
+		/*
+		persona.setDni("34294954");
+		persona.setNombre("Carloncho");
+		persona.setApellido("Perez");
+		
+		personaDao.modificar(persona);
+		*/
 		boolean exito = true;
-		ArrayList<Persona> listaAux = new ArrayList<>();
-		listaAux = personaDao.readAll();
+		
 		if (exito)
 		{
 			System.out.println("SAPE!");
@@ -45,6 +54,7 @@ public class Main {
 			{
 				System.out.println(aux.toString() + "\n");
 			}
+			System.out.println(personaDao.obtenerPersona("321").toString());
 			
 		}
 		else

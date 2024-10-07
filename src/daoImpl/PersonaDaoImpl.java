@@ -17,13 +17,15 @@ public class PersonaDaoImpl implements PersonaDao
 	private String modifyQry;
 	private String deleteQry;
 	private String readAllQry;
+	private String obtenerQry;
 	
 	public PersonaDaoImpl()
 	{
 		insertQry = "INSERT INTO Personas (Dni, Nombre, Apellido) VALUES (?, ?, ?)";
-		modifyQry = "ACA VA LA QUERY PARA MODIFICAR";
+		modifyQry = "UPDATE Personas SET Nombre = ? , Apellido = ? WHERE Dni = ?";
 		deleteQry = "DELETE from Personas WHERE Dni = ?";
 		readAllQry = "SELECT * FROM Personas";
+		obtenerQry = "SELECT * FROM Personas WHERE Dni = ?";
 	}
 	
 	@Override
@@ -80,8 +82,30 @@ public class PersonaDaoImpl implements PersonaDao
 
 	@Override
 	public boolean modificar(Persona persona) {
-		// TODO Auto-generated method stub
-		return false;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		int rows = 0;
+		
+		try
+		{
+			Conexion conexion = new Conexion();
+			conn = conexion.getSQLConexion();
+			pstmt = conn.prepareStatement(modifyQry);
+			
+			//El DNI no se puede cambiar segun enunciado...
+			
+			pstmt.setString(1, persona.getNombre());
+			pstmt.setString(2, persona.getApellido());
+			pstmt.setString(3, persona.getDni());
+			
+			rows = pstmt.executeUpdate();
+		}
+		catch(Exception exception)
+		{
+			exception.printStackTrace();
+		}
+		
+		return (rows > 0);
 	}
 
 	@Override
@@ -113,6 +137,33 @@ public class PersonaDaoImpl implements PersonaDao
 		return personas;
 	}
 	
+	@Override
+	public Persona obtenerPersona(String dni) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		//int rows = 0;
+		ResultSet resultSet;
+		Persona persona = new Persona();
+		
+		try 
+		{
+			Conexion conexion = new Conexion();
+			conn = conexion.getSQLConexion();
+			pstmt = conn.prepareStatement(obtenerQry);
+			pstmt.setString(1, dni);
+			resultSet = pstmt.executeQuery();
+			
+			resultSet.next();
+			
+			persona = getPersona(resultSet);
+			
+		} 
+		catch (SQLException e) 
+		{
+			e.printStackTrace();
+		}
+		return persona;
+	}
 	
 	private Persona getPersona(ResultSet resultSet) throws SQLException
 	{
@@ -121,4 +172,5 @@ public class PersonaDaoImpl implements PersonaDao
 		String apellido = resultSet.getString("Apellido");
 		return new Persona(dni, nombre, apellido);
 	}
+
 }
