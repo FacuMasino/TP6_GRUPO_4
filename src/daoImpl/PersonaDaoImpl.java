@@ -3,6 +3,9 @@ package daoImpl;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import dao.PersonaDao;
@@ -82,8 +85,40 @@ public class PersonaDaoImpl implements PersonaDao
 	}
 
 	@Override
-	public List<Persona> readAll() {
-		// TODO Auto-generated method stub
-		return null;
+	public ArrayList<Persona> readAll() {
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
+		ResultSet resultSet;
+		ArrayList<Persona> personas = new ArrayList<Persona>();
+		///////////////////////
+		//ACA
+		///////////////////////
+		try 
+		{
+			Conexion conexion = new Conexion();
+			conn = conexion.getSQLConexion();
+			pstmt = conn.prepareStatement(readAllQry);
+			resultSet = pstmt.executeQuery();
+			while(resultSet.next())
+			{
+				personas.add(getPersona(resultSet));
+			}
+		} 
+		catch (SQLException e) 
+		{
+			e.printStackTrace();
+		}
+		return personas;
+	}
+	
+	
+	private Persona getPersona(ResultSet resultSet) throws SQLException
+	{
+		String dni = resultSet.getString("Dni");
+		String nombre = resultSet.getString("Nombre");
+		String apellido = resultSet.getString("Apellido");
+		return new Persona(dni, nombre, apellido);
 	}
 }

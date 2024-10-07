@@ -12,6 +12,13 @@ public class Persona
 		setNombre("Natalia");
 		setApellido("Natalia");
 	}
+	
+	public Persona(String dni,String nombre,String apellido)
+	{
+		this.dni=dni;
+		this.nombre=nombre;
+		this.apellido=apellido;
+	}
 
 	public String getDni()
 	{
@@ -42,4 +49,10 @@ public class Persona
 	{
 		this.apellido = apellido;
 	}
+
+	@Override
+	public String toString() {
+		return "Persona [dni=" + dni + ", nombre=" + nombre + ", apellido=" + apellido + "]";
+	}
+	
 }
