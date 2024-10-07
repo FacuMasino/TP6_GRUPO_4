@@ -17,8 +17,10 @@ public class Conexion
 	{
 		host = "jdbc:mysql://localhost:3306/";
 		user = "root";
-		pass = "ACAVATUCLAVEDELABASEDEDATOS";
-		dbName = "bdPersonas";
+		//pass = "ACAVATUCLAVEDELABASEDEDATOS";
+		pass = "root";
+		//dbName = "bdPersonas";
+		dbName = "bdpersonas";
 	}
 	
 	public Connection getSQLConexion()   
