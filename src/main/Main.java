@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import daoImpl.PersonaDaoImpl;
 import entidad.Persona;
+import presentacion.vista.JFMenuPrincipal;
 
 
 public class Main {
@@ -17,11 +18,11 @@ public class Main {
 		Persona persona1 = new Persona();
 		ArrayList<Persona> listaAux = new ArrayList<>();
 		listaAux = personaDao.readAll();
-		/*
+		
 		persona.setDni("34294954");
 		persona.setNombre("Carlos");
 		persona.setApellido("Berligieri");
-		*/
+		
 		/*
 		persona.setDni("123");
 		persona.setNombre("Tomas");
@@ -33,7 +34,7 @@ public class Main {
 		persona1.setApellido("De Beauvoir");
 		*/
 		
-		//boolean exito = personaDao.agregar(persona1);
+		//boolean exito = personaDao.agregar(persona);
 		
 		//boolean exito = personaDao.eliminar(persona);
 		
@@ -45,6 +46,9 @@ public class Main {
 		
 		personaDao.modificar(persona);
 		*/
+		
+		JFMenuPrincipal menu = new JFMenuPrincipal();
+		menu.setVisible(true);
 		boolean exito = true;
 		
 		if (exito)
@@ -54,7 +58,7 @@ public class Main {
 			{
 				System.out.println(aux.toString() + "\n");
 			}
-			System.out.println(personaDao.obtenerPersona("321").toString());
+			//System.out.println(personaDao.obtenerPersona("321").toString());
 			
 		}
 		else
