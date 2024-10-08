@@ -39,15 +39,18 @@ public class JFMenuPrincipal extends JFrame {
 	private JMenuItem mntmEliminar;
 	private JMenuItem mntmListar;
 	private JPAltaPersona altaPersona;
+	private JPBajaPersona bajaPersona;
+	
 	private static DefaultListModel<Persona> defaultListModel;
 
 	public JFMenuPrincipal() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setTitle("Programa");
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		setLayout(new BorderLayout());
+		getContentPane().setLayout(new BorderLayout());
 		this.defaultListModel = new DefaultListModel<Persona>();
 		
 		menuBar = new JMenuBar();
@@ -82,6 +85,20 @@ public class JFMenuPrincipal extends JFrame {
 			
 			
 		});
+		
+		mntmEliminar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				contentPane.removeAll();
+				bajaPersona= new JPBajaPersona();
+				contentPane.add(bajaPersona);
+				contentPane.repaint();
+				contentPane.revalidate();
+				
+				
+			}
+		}
+		
+				);
 		
 	}
 }
