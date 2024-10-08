@@ -29,21 +29,21 @@ import java.awt.CardLayout;
 import javax.swing.SpringLayout;
 import net.miginfocom.swing.MigLayout;
 
-public class JFMenuPrincipal extends JFrame {
+public class JFPrincipal extends JFrame {
 
 	private JPanel contentPane;
 	private JMenuBar menuBar;
 	private JMenu mnPersona;
-	private JMenuItem mntmAgregar;
-	private JMenuItem mntmModificar;
-	private JMenuItem mntmEliminar;
-	private JMenuItem mntmListar;
+	private JMenuItem mnuItemAgregar;
+	private JMenuItem mnuItemModificar;
+	private JMenuItem mnuItemEliminar;
+	private JMenuItem mnuItemListar;
 	private JPAltaPersona altaPersona;
 	private JPBajaPersona bajaPersona;
 	
 	private static DefaultListModel<Persona> defaultListModel;
 
-	public JFMenuPrincipal() {
+	public JFPrincipal() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("Programa");
 		setBounds(100, 100, 450, 300);
@@ -51,7 +51,6 @@ public class JFMenuPrincipal extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		getContentPane().setLayout(new BorderLayout());
-		this.defaultListModel = new DefaultListModel<Persona>();
 		
 		menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -59,46 +58,33 @@ public class JFMenuPrincipal extends JFrame {
 		mnPersona = new JMenu("Persona");
 		menuBar.add(mnPersona);
 		
-		mntmAgregar = new JMenuItem("Agregar");
-		mnPersona.add(mntmAgregar);
+		mnuItemAgregar = new JMenuItem("Agregar");
+		mnPersona.add(mnuItemAgregar);
 		
-		mntmModificar = new JMenuItem("Modificar");
-		mnPersona.add(mntmModificar);
+		mnuItemModificar = new JMenuItem("Modificar");
+		mnPersona.add(mnuItemModificar);
 		
-		mntmEliminar = new JMenuItem("Eliminar");
-		mnPersona.add(mntmEliminar);
+		mnuItemEliminar = new JMenuItem("Eliminar");
+		mnPersona.add(mnuItemEliminar);
 		
-		mntmListar = new JMenuItem("Listar");
-		mnPersona.add(mntmListar);
-		
-		mntmAgregar.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				contentPane.removeAll();
-				altaPersona = new JPAltaPersona();
-				altaPersona.setDefaultListModel(defaultListModel);
-				contentPane.add(altaPersona);
-				contentPane.repaint();
-				contentPane.revalidate();			
-			}
-			
-			
-		});
-		
-		mntmEliminar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				contentPane.removeAll();
-				bajaPersona= new JPBajaPersona();
-				contentPane.add(bajaPersona);
-				contentPane.repaint();
-				contentPane.revalidate();
-				
-				
-			}
-		}
-		
-				);
-		
+		mnuItemListar = new JMenuItem("Listar");
+		mnPersona.add(mnuItemListar);
 	}
+
+	public JMenuItem getMnuItemAgregar() {
+		return mnuItemAgregar;
+	}
+
+	public JMenuItem getMnuItemModificar() {
+		return mnuItemModificar;
+	}
+
+	public JMenuItem getMnuItemEliminar() {
+		return mnuItemEliminar;
+	}
+
+	public JMenuItem getMnuItemListar() {
+		return mnuItemListar;
+	}
+	
 }

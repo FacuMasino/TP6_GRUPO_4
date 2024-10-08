@@ -18,8 +18,7 @@ public class Conexion
 		
 		host = "jdbc:mysql://localhost:3306/";
 		user = "root";
-		//pass = "ACAVATUCLAVEDELABASEDEDATOS";
-		pass = "";
+		pass = "root";
 		//dbName = "bdPersonas";
 		dbName = "bdpersonas";
 	}

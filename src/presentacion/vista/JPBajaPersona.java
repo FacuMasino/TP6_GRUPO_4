@@ -19,7 +19,7 @@ public class JPBajaPersona extends JPanel {
 	private JPanel panelDerecho;
 	private JPanel panelCentral;
 	private PersonasListModel personasLM; 
-	private JList<Persona> personasLst;
+	private JList<Persona> jlPersonas;
 	private JLabel eliminarLbl; 
 	private JButton btnEliminar;
 
@@ -43,15 +43,15 @@ public class JPBajaPersona extends JPanel {
 		eliminarLbl.setHorizontalAlignment(SwingConstants.CENTER);
 		panelCentral.add(eliminarLbl, BorderLayout.NORTH);
 		
-		JList<Persona> list = new JList<Persona>();
-		panelCentral.add(list, BorderLayout.CENTER);
+		jlPersonas = new JList<Persona>();
+		panelCentral.add(jlPersonas, BorderLayout.CENTER);
 		
 		panelDerecho = new JPanel();
 		add(panelDerecho);
 		
 	}
 	
-	public void setPersonasLM(PersonasListModel personasLM)
+	public void setPersonasListModel(PersonasListModel personasLM)
 	{
 		
 		this.personasLM = personasLM;
@@ -61,7 +61,7 @@ public class JPBajaPersona extends JPanel {
 			this.personasLM = new PersonasListModel();
 		}
 
-		personasLst.setModel(this.personasLM);
+		jlPersonas.setModel(this.personasLM);
 	}
 	
 

@@ -25,7 +25,6 @@ public class JPAltaPersona extends JPanel {
 	private JLabel lblApellido;
 	private JLabel lblDni;
 	private JButton btnAceptar;
-	private DefaultListModel<Persona> listModel;
 
 	/**
 	 * Create the panel.
@@ -70,8 +69,4 @@ public class JPAltaPersona extends JPanel {
 
 	}
 
-	public void setDefaultListModel(DefaultListModel<Persona> personaList) {
-		
-		this.listModel = personaList;
-	}
 }
