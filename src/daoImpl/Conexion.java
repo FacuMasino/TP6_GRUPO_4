@@ -1,8 +1,11 @@
 package daoImpl;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Properties;
 
 public class Conexion
 {
@@ -14,10 +17,23 @@ public class Conexion
 	
 	public Conexion()
 	{
-		host = "jdbc:mysql://localhost:3306/";
-		user = "root";
-		pass = "";
-		dbName = "bdPersonas";
+		Properties props = new Properties();
+
+		try
+		{
+			FileInputStream in = new FileInputStream("config.properties");
+			props.load(in);
+			in.close();
+			
+			host = props.getProperty("db.host");
+			user = props.getProperty("db.user");
+			pass = props.getProperty("db.pass");
+			dbName = props.getProperty("db.name");
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
 	}
 	
 	public Connection getSQLConexion()   

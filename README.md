@@ -1,10 +1,12 @@
 # TP6_GRUPO_4
 
-El archivo que contiene la ruta del MySQL Connector no está siendo versionado para que no haya que configurar la ubicación del mismo cada vez que se hace pull.
+## Dependencias
 
-Si el repositorio está siendo clonado o descargado por primera vez, es necesario crear (en la raiz del directorio) un archivo llamado .classpath que contenga el siguiente código.
+### MySQL Connector
 
-Luego, se puede o bien configurar la ruta con la interfaz de eclipse o bien reemplazar la línea que contiene la ruta del conector por la ubicación correspondiente.
+El archivo que contiene la ruta de MySQL Connector no está siendo versionado para que no haya que configurar la ubicación del mismo cada vez que se hace pull.
+
+Si el repositorio está siendo clonado o descargado por primera vez, es necesario crear (en el directorio raíz) un archivo llamado `.classpath` que contenga el siguiente código.
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -18,6 +20,26 @@ Luego, se puede o bien configurar la ruta con la interfaz de eclipse o bien reem
 </classpath>
 ```
 
+Luego, se puede o bien configurar la ruta con la interfaz de eclipse o bien reemplazar la línea que contiene la ruta del conector por la ubicación correspondiente.
 Podés dejar tu ruta acá abajo para futura referencia:
 
 - Maxi: `/Users/mrmalvicino/eclipse-workspace/mysql-connector-j-9.0.0/mysql-connector-j-9.0.0.jar`
+
+### Propiedades de conexión
+
+Asímismo, es necesario configurar las credenciales de acceso a la base de datos.
+Para ello, se debe crear un archivo llamado `config.properties` en el directorio raíz del proyecto con el siguiente código, reemplazando `tupassword` por la contraseña de la base de datos.
+
+```properties
+# Dirección del host de la base de datos
+db.host=jdbc:mysql://localhost:3306/
+
+# Usuario de la base de datos
+db.user=root
+
+# Contraseña del usuario
+db.pass=tupassword
+
+# Nombre de la base de datos
+db.name=bdPersonas
+```
