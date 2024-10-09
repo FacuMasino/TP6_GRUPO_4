@@ -26,9 +26,7 @@ public class JPAltaPersona extends JPanel {
 	private JLabel lblDni;
 	private JButton btnAceptar;
 
-	/**
-	 * Create the panel.
-	 */
+
 	public JPAltaPersona() {
 		setLayout(null);
 		setBounds(100, 100, 450, 300);
@@ -68,5 +66,26 @@ public class JPAltaPersona extends JPanel {
 		add(btnAceptar);
 
 	}
+
+
+	public JButton getBtnAceptar() {
+		return btnAceptar;
+	}
+
+
+	public JTextField getTxtNombre() {
+		return txtNombre;
+	}
+
+
+	public JTextField getTxtApellido() {
+		return txtApellido;
+	}
+
+
+	public JTextField getTxtDni() {
+		return txtDni;
+	}
+
 
 }

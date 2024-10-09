@@ -1,10 +1,11 @@
 package main;
 
-import java.awt.List;
 import java.util.ArrayList;
 
 import daoImpl.PersonaDaoImpl;
 import entidad.Persona;
+import negocio.PersonaNegocio;
+import negocioImpl.PersonaNegocioImpl;
 import presentacion.controlador.Controlador;
 import presentacion.vista.JFPrincipal;
 
@@ -14,7 +15,8 @@ public class Main {
 	public static void main(String[] args)
 	{
 		JFPrincipal vista = new JFPrincipal();
-		Controlador controlador = new Controlador(vista);
+		PersonaNegocio negocio = new PersonaNegocioImpl();
+		Controlador controlador = new Controlador(vista, negocio);
 		controlador.inicializar();
 		
 		// Pruebas

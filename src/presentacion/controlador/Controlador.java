@@ -3,7 +3,10 @@ package presentacion.controlador;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import daoImpl.PersonaDaoImpl;
+import entidad.Persona;
 import entidad.PersonasListModel;
+import negocio.PersonaNegocio;
 import presentacion.vista.JFPrincipal;
 import presentacion.vista.JPAltaPersona;
 import presentacion.vista.JPBajaPersona;
@@ -16,8 +19,9 @@ public class Controlador {
 	private JPBajaPersona jpBajaPersona;
 	private JPModificarPersona jpModificarPersona;
 	private PersonasListModel personasLM;
+	private PersonaNegocio personaNegocio;
 	
-	public Controlador(JFPrincipal vista){
+	public Controlador(JFPrincipal vista, PersonaNegocio negocio){
 		
 		// Panel Principal
 		this.jfPrincipal = vista;
@@ -26,6 +30,7 @@ public class Controlador {
 		this.jpAltaPersona = new JPAltaPersona();
 		this.jpBajaPersona = new JPBajaPersona();
 		this.jpModificarPersona = new JPModificarPersona();
+		this.personaNegocio = negocio;
 	
 		// List model de personas para las listas
 		this.personasLM = new PersonasListModel();
@@ -36,6 +41,8 @@ public class Controlador {
 		this.jfPrincipal.getMnuItemAgregar().addActionListener
 		(a->evtClickMenu_Agregar(a));
 		
+		this.jpAltaPersona.getBtnAceptar().addActionListener(a -> agregarPersona(a));
+		
 		// Panel Baja
 		this.jfPrincipal.getMnuItemEliminar().addActionListener
 		(a->evtClickMenu_Baja(a));
@@ -43,6 +50,17 @@ public class Controlador {
 		// Panel Modificar
 		this.jfPrincipal.getMnuItemModificar().addActionListener
 		(a->evtClickMenu_Modificar(a));
+	}
+	
+	private void agregarPersona(ActionEvent a) {
+		Persona persona = new Persona();
+		persona.setApellido(this.jpAltaPersona.getTxtApellido().getText());
+		persona.setNombre(this.jpAltaPersona.getTxtNombre().getText());
+		persona.setDni(this.jpAltaPersona.getTxtDni().getText());
+		this.personaNegocio.agregar(persona);
+		this.jpAltaPersona.getTxtApellido().setText("");
+		this.jpAltaPersona.getTxtNombre().setText("");
+		this.jpAltaPersona.getTxtDni().setText("");
 	}
 	
 	private void evtClickMenu_Agregar(ActionEvent a) {
