@@ -21,7 +21,7 @@ public class JPListarPersonas extends JPanel
     {
         setLayout(new BorderLayout(0, 0));
 
-        // Paneles norte, este, oeste y sur
+        // Paneles de relleno
 
         northPanel = new JPanel();
         add(northPanel, BorderLayout.NORTH);

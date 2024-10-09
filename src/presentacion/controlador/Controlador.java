@@ -34,8 +34,9 @@ public class Controlador
 		this.jpListarPersonas = new JPListarPersonas();
 		this.personaNegocio = negocio;
 	
-		// List model de personas para las listas
+		// Models
 		this.personasLM = new PersonasListModel();
+		this.personasTM = new PersonasTableModel();
 		
 		// Configuración de eventos
 		
@@ -99,6 +100,7 @@ public class Controlador
 	private void evtClickMenu_Listar(ActionEvent a)
 	{
 		this.jfPrincipal.getContentPane().removeAll();
+		personasTM.addAllElements(personaNegocio.readAll());
 		jpListarPersonas.setPersonasTableModel(personasTM);
 		this.jfPrincipal.getContentPane().add(jpListarPersonas);
 		this.jfPrincipal.getContentPane().repaint();

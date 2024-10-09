@@ -1,6 +1,9 @@
 package entidad;
 
 import javax.swing.table.DefaultTableModel;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.TreeSet;
 
 public class PersonasTableModel extends DefaultTableModel
@@ -17,6 +20,16 @@ public class PersonasTableModel extends DefaultTableModel
     public void addElement(Persona element)
     {
         tsPersonas.add(element);
+        fireTableDataChanged();
+    }
+    
+    public void addAllElements(List<Persona> list)
+    {
+        for (Persona persona : list)
+        {
+            tsPersonas.add(persona);
+        }
+        
         fireTableDataChanged();
     }
 
