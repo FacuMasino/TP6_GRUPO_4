@@ -2,21 +2,12 @@ package presentacion.vista;
 
 import javax.swing.JPanel;
 import javax.swing.JLabel;
-import javax.swing.JMenu;
-
-import java.awt.BorderLayout;
 import java.awt.Font;
 import javax.swing.JTextField;
-
-import entidad.Persona;
-
-import javax.swing.DefaultListModel;
 import javax.swing.JButton;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
 
-public class JPAltaPersona extends JPanel {
+public class JPAltaPersona extends JPanel
+{
 	private static final long serialVersionUID = 1L;
 	private JTextField txtNombre;
 	private JTextField txtApellido;
@@ -26,8 +17,8 @@ public class JPAltaPersona extends JPanel {
 	private JLabel lblDni;
 	private JButton btnAceptar;
 
-
-	public JPAltaPersona() {
+	public JPAltaPersona()
+	{
 		setLayout(null);
 		setBounds(100, 100, 450, 300);
 		
@@ -64,28 +55,25 @@ public class JPAltaPersona extends JPanel {
 		btnAceptar = new JButton("Aceptar");
 		btnAceptar.setBounds(96, 188, 129, 26);
 		add(btnAceptar);
-
 	}
 
-
-	public JButton getBtnAceptar() {
+	public JButton getBtnAceptar()
+	{
 		return btnAceptar;
 	}
 
-
-	public JTextField getTxtNombre() {
+	public JTextField getTxtNombre()
+	{
 		return txtNombre;
 	}
 
-
-	public JTextField getTxtApellido() {
+	public JTextField getTxtApellido()
+	{
 		return txtApellido;
 	}
 
-
-	public JTextField getTxtDni() {
+	public JTextField getTxtDni()
+	{
 		return txtDni;
 	}
-
-
 }

@@ -7,18 +7,14 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JTextField;
-
 import entidad.Persona;
 import entidad.PersonasListModel;
-
 import javax.swing.JButton;
-import java.awt.FlowLayout;
 import java.awt.Font;
-import javax.swing.BoxLayout;
 import java.awt.GridLayout;
 
-public class JPModificarPersona extends JPanel {
-
+public class JPModificarPersona extends JPanel
+{
 	private static final long serialVersionUID = 1L;
 	private PersonasListModel personasLM;
 	private JTextField txtNombre;
@@ -30,7 +26,8 @@ public class JPModificarPersona extends JPanel {
 	private JLabel lblinfo;
 	private JButton btnModificar;
 	
-	public JPModificarPersona() {
+	public JPModificarPersona()
+	{
 		setLayout(new BorderLayout(0, 0));
 		
 		JPMain = new JPanel();
@@ -45,6 +42,7 @@ public class JPModificarPersona extends JPanel {
 		lblinfo.setFont(new Font("Tahoma", Font.BOLD, 11));
 		
 		GroupLayout gl_JPMain = new GroupLayout(JPMain);
+
 		gl_JPMain.setHorizontalGroup(
 			gl_JPMain.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_JPMain.createSequentialGroup()
@@ -59,6 +57,7 @@ public class JPModificarPersona extends JPanel {
 								.addComponent(jlPersonas, GroupLayout.DEFAULT_SIZE, 390, Short.MAX_VALUE))
 							.addGap(30))))
 		);
+
 		gl_JPMain.setVerticalGroup(
 			gl_JPMain.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_JPMain.createSequentialGroup()
@@ -70,6 +69,7 @@ public class JPModificarPersona extends JPanel {
 					.addComponent(JPFields, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 					.addGap(30))
 		);
+
 		JPFields.setLayout(new GridLayout(0, 4, 6, 0));
 		
 		txtNombre = new JTextField();
@@ -89,12 +89,10 @@ public class JPModificarPersona extends JPanel {
 		btnModificar.setEnabled(false);
 		JPFields.add(btnModificar);
 		JPMain.setLayout(gl_JPMain);
-
 	}
 	
 	public void setPersonasListModel(PersonasListModel personasLM)
 	{
-		
 		this.personasLM = personasLM;
 		
 		if (this.personasLM == null)

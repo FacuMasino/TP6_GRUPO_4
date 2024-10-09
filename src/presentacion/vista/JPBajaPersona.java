@@ -5,15 +5,13 @@ import java.awt.GridLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
-
 import java.awt.BorderLayout;
 import entidad.Persona;
 import entidad.PersonasListModel;
 import javax.swing.SwingConstants;
 
-public class JPBajaPersona extends JPanel {
-	
-
+public class JPBajaPersona extends JPanel
+{
 	private static final long serialVersionUID = 1L;
 	private JPanel panelIzquierdo;
 	private JPanel panelDerecho;
@@ -22,10 +20,9 @@ public class JPBajaPersona extends JPanel {
 	private JList<Persona> jlPersonas;
 	private JLabel eliminarLbl; 
 	private JButton btnEliminar;
-
 	
-	public JPBajaPersona() {
-		
+	public JPBajaPersona()
+	{	
 		setLayout(new GridLayout(1, 1, 0, 0));
 		
 		panelIzquierdo = new JPanel();
@@ -48,12 +45,10 @@ public class JPBajaPersona extends JPanel {
 		
 		panelDerecho = new JPanel();
 		add(panelDerecho);
-		
 	}
 	
 	public void setPersonasListModel(PersonasListModel personasLM)
 	{
-		
 		this.personasLM = personasLM;
 		
 		if (this.personasLM == null)
@@ -63,6 +58,4 @@ public class JPBajaPersona extends JPanel {
 
 		jlPersonas.setModel(this.personasLM);
 	}
-	
-
 }

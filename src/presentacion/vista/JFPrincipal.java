@@ -1,36 +1,16 @@
 package presentacion.vista;
 
 import java.awt.BorderLayout;
-import java.awt.EventQueue;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
-import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-
-import entidad.Persona;
-
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.forms.layout.ColumnSpec;
-import com.jgoodies.forms.layout.FormSpecs;
-import com.jgoodies.forms.layout.RowSpec;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import java.awt.FlowLayout;
-import java.awt.CardLayout;
-import javax.swing.SpringLayout;
-import net.miginfocom.swing.MigLayout;
 
-public class JFPrincipal extends JFrame {
-
+public class JFPrincipal extends JFrame
+{
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JMenuBar menuBar;
 	private JMenu mnPersona;
@@ -40,10 +20,9 @@ public class JFPrincipal extends JFrame {
 	private JMenuItem mnuItemListar;
 	private JPAltaPersona altaPersona;
 	private JPBajaPersona bajaPersona;
-	
-	private static DefaultListModel<Persona> defaultListModel;
 
-	public JFPrincipal() {
+	public JFPrincipal()
+	{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("Programa");
 		setBounds(100, 100, 450, 300);
@@ -71,20 +50,23 @@ public class JFPrincipal extends JFrame {
 		mnPersona.add(mnuItemListar);
 	}
 
-	public JMenuItem getMnuItemAgregar() {
+	public JMenuItem getMnuItemAgregar()
+	{
 		return mnuItemAgregar;
 	}
 
-	public JMenuItem getMnuItemModificar() {
+	public JMenuItem getMnuItemModificar()
+	{
 		return mnuItemModificar;
 	}
 
-	public JMenuItem getMnuItemEliminar() {
+	public JMenuItem getMnuItemEliminar()
+	{
 		return mnuItemEliminar;
 	}
 
-	public JMenuItem getMnuItemListar() {
+	public JMenuItem getMnuItemListar()
+	{
 		return mnuItemListar;
 	}
-	
 }

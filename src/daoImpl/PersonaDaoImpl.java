@@ -1,17 +1,15 @@
 package daoImpl;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 
 import dao.PersonaDao;
 import entidad.Persona;
 
-public class PersonaDaoImpl implements PersonaDao 
+public class PersonaDaoImpl implements PersonaDao
 {
 	private String insertQry;
 	private String modifyQry;
@@ -56,7 +54,7 @@ public class PersonaDaoImpl implements PersonaDao
 	}
 
 	@Override
-	public boolean eliminar(Persona persona_a_eliminar)
+	public boolean eliminar(Persona persona)
 	{
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -68,7 +66,7 @@ public class PersonaDaoImpl implements PersonaDao
 			conn = conexion.getSQLConexion();
 			pstmt = conn.prepareStatement(deleteQry);
 			
-			pstmt.setString(1,persona_a_eliminar.getDni());
+			pstmt.setString(1, persona.getDni());
 			
 			rows = pstmt.executeUpdate();
 		}
@@ -81,7 +79,8 @@ public class PersonaDaoImpl implements PersonaDao
 	}
 
 	@Override
-	public boolean modificar(Persona persona) {
+	public boolean modificar(Persona persona)
+	{
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		int rows = 0;
@@ -109,7 +108,8 @@ public class PersonaDaoImpl implements PersonaDao
 	}
 
 	@Override
-	public ArrayList<Persona> readAll() {
+	public ArrayList<Persona> readAll()
+	{
 		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -138,7 +138,8 @@ public class PersonaDaoImpl implements PersonaDao
 	}
 	
 	@Override
-	public Persona obtenerPersona(String dni) {
+	public Persona obtenerPersona(String dni)
+	{
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		//int rows = 0;
@@ -172,5 +173,4 @@ public class PersonaDaoImpl implements PersonaDao
 		String apellido = resultSet.getString("Apellido");
 		return new Persona(dni, nombre, apellido);
 	}
-
 }

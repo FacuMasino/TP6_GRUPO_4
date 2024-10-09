@@ -4,10 +4,9 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class Conexion 
+public class Conexion
 {
 	private static Connection conn;
-	
 	private String host;
 	private String user;
 	private String pass;
@@ -15,12 +14,10 @@ public class Conexion
 	
 	public Conexion()
 	{
-		
 		host = "jdbc:mysql://localhost:3306/";
 		user = "root";
 		pass = "";
-		//dbName = "bdPersonas";
-		dbName = "bdpersonas";
+		dbName = "bdPersonas";
 	}
 	
 	public Connection getSQLConexion()   
@@ -32,7 +29,8 @@ public class Conexion
 				conn = DriverManager.getConnection(host + dbName, user, pass);
 			}
 		}
-		catch (Exception e) {
+		catch (Exception e)
+		{
 			e.printStackTrace();
 		}
 		return conn;
