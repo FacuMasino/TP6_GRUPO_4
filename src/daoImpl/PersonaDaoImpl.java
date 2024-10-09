@@ -5,7 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-
 import dao.PersonaDao;
 import entidad.Persona;
 
@@ -91,8 +90,6 @@ public class PersonaDaoImpl implements PersonaDao
 			conn = conexion.getSQLConexion();
 			pstmt = conn.prepareStatement(modifyQry);
 			
-			//El DNI no se puede cambiar segun enunciado...
-			
 			pstmt.setString(1, persona.getNombre());
 			pstmt.setString(2, persona.getApellido());
 			pstmt.setString(3, persona.getDni());
@@ -116,9 +113,7 @@ public class PersonaDaoImpl implements PersonaDao
 		
 		ResultSet resultSet;
 		ArrayList<Persona> personas = new ArrayList<Persona>();
-		///////////////////////
-		//ACA
-		///////////////////////
+
 		try 
 		{
 			Conexion conexion = new Conexion();
@@ -142,7 +137,7 @@ public class PersonaDaoImpl implements PersonaDao
 	{
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		//int rows = 0;
+		
 		ResultSet resultSet;
 		Persona persona = new Persona();
 		
