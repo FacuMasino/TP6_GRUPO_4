@@ -107,7 +107,6 @@ public class PersonaDaoImpl implements PersonaDao
 	@Override
 	public ArrayList<Persona> readAll()
 	{
-		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		

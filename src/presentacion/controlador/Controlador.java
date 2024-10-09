@@ -3,11 +3,12 @@ package presentacion.controlador;
 import java.awt.event.ActionEvent;
 import entidad.Persona;
 import entidad.PersonasListModel;
+import entidad.PersonasTableModel;
 import negocio.PersonaNegocio;
 import presentacion.vista.JFPrincipal;
 import presentacion.vista.JPAltaPersona;
 import presentacion.vista.JPBajaPersona;
-import presentacion.vista.JPListarPersona;
+import presentacion.vista.JPListarPersonas;
 import presentacion.vista.JPModificarPersona;
 
 public class Controlador
@@ -15,9 +16,10 @@ public class Controlador
 	private JFPrincipal jfPrincipal;
 	private JPAltaPersona jpAltaPersona;
 	private JPBajaPersona jpBajaPersona;
-	private JPListarPersona jpListarPersona;
+	private JPListarPersonas jpListarPersonas;
 	private JPModificarPersona jpModificarPersona;
 	private PersonasListModel personasLM;
+	private PersonasTableModel personasTM;
 	private PersonaNegocio personaNegocio;
 	
 	public Controlador(JFPrincipal vista, PersonaNegocio negocio)
@@ -29,7 +31,7 @@ public class Controlador
 		this.jpAltaPersona = new JPAltaPersona();
 		this.jpBajaPersona = new JPBajaPersona();
 		this.jpModificarPersona = new JPModificarPersona();
-		this.jpListarPersona = new JPListarPersona();
+		this.jpListarPersonas = new JPListarPersonas();
 		this.personaNegocio = negocio;
 	
 		// List model de personas para las listas
@@ -97,8 +99,8 @@ public class Controlador
 	private void evtClickMenu_Listar(ActionEvent a)
 	{
 		this.jfPrincipal.getContentPane().removeAll();
-		jpListarPersona.setPersonasListModel(personasLM);
-		this.jfPrincipal.getContentPane().add(jpListarPersona);
+		jpListarPersonas.setPersonasTableModel(personasTM);
+		this.jfPrincipal.getContentPane().add(jpListarPersonas);
 		this.jfPrincipal.getContentPane().repaint();
 		this.jfPrincipal.getContentPane().revalidate();	
 	}	
