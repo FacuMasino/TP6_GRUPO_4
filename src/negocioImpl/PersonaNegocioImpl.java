@@ -14,11 +14,12 @@ public class PersonaNegocioImpl implements IPersonaNegocio
 	public boolean agregar(Persona persona)
 	{
 		boolean estado=false;
+		//String Dni = persona.getDni();
 		
-		if(persona.getNombre().trim().length()>0 && persona.getApellido().trim().length()>0 && persona.getDni().trim().length()>0)
-		{
-			estado=personaDao.agregar(persona);
-		}
+			if(persona.getNombre().trim().length()>0 && persona.getApellido().trim().length()>0 && persona.getDni().trim().length()>0 )
+			{
+				estado=personaDao.agregar(persona);
+			}
 
 		return estado;
 	}
@@ -67,4 +68,36 @@ public class PersonaNegocioImpl implements IPersonaNegocio
 		
 		return personaDao.dniDisponible(persona.getDni());
 	}
+	
+	public boolean contieneTextoElDni (String dni) throws NoNumericoExcepcion 
+	{
+		Boolean auxTexto = false;
+		
+		for (int x =0; x < dni.length(); x ++) 
+		{
+			if (dni.charAt(x) < 48 || dni.charAt(x)> 57)
+				{
+					auxTexto= true; 
+				}
+		}
+		
+		if (auxTexto == true) 
+		{
+			NoNumericoExcepcion exc1 = new NoNumericoExcepcion();
+			throw exc1;
+		}
+		
+		if (auxTexto)
+		{
+			return true;
+		}
+		
+		else
+		{
+			return false; 
+		}
+	
+	}
+	
+	
 }

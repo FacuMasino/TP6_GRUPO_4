@@ -1,5 +1,6 @@
 package presentacion.controlador;
 
+import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 
 import javax.swing.JOptionPane;
@@ -9,6 +10,7 @@ import entidad.Persona;
 import entidad.PersonasListModel;
 import entidad.PersonasTableModel;
 import negocio.IPersonaNegocio;
+import negocioImpl.NoNumericoExcepcion;
 import presentacion.vista.JFPrincipal;
 import presentacion.vista.JPAltaPersona;
 import presentacion.vista.JPBajaPersona;
@@ -65,7 +67,17 @@ public class Controlador
 		// Configuración de eventos JPAltaPersona
 		
 		this.jpAltaPersona.getBtnAceptar().addActionListener
-		(a -> agregarPersona(a));
+		(a -> {
+			try {
+				agregarPersona(a);
+			} catch (HeadlessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (NoNumericoExcepcion e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		});
 		
 		// Configuración de eventos JPModificarPersona
 		
@@ -88,12 +100,14 @@ public class Controlador
 		
 	}
 	
-	private void agregarPersona(ActionEvent a)
+	private void agregarPersona(ActionEvent a) throws HeadlessException, NoNumericoExcepcion
 	{ 
 		Persona persona = new Persona();
 		persona.setApellido(this.jpAltaPersona.getTxtApellido().getText());
 		persona.setNombre(this.jpAltaPersona.getTxtNombre().getText());
 		persona.setDni(this.jpAltaPersona.getTxtDni().getText());
+		
+		String Dni = jpAltaPersona.getTxtDni().getText();
 		
 		// Si se pudo agregar la persona, se debe actualizar el ListModel
 		// y limpiar campos
@@ -106,15 +120,19 @@ public class Controlador
 			
 			JOptionPane.showMessageDialog(null, "¡Persona agregada exitosamente!", "Todo OK!", JOptionPane.INFORMATION_MESSAGE,null);
 			}
+		
 			else if(!this.personaNegocio.dniDisponible(persona))
 				{
 					JOptionPane.showMessageDialog(null, "El documento ingresado ya existe..." ,"Error", JOptionPane.ERROR_MESSAGE);
 				}
-				else 
-					{ 
-						validarIngresos(persona);
+				else if (estadoTexto(Dni))
+					{
+						JOptionPane.showMessageDialog(null, "El DNI no puede contener valores no numericos" ,"Error", JOptionPane.ERROR_MESSAGE);
 					}
-		
+					else 
+						{  
+							validarCamposNoVacios(persona);
+						}
 	}
 		
 	private void evtClickMenu_Agregar(ActionEvent a)
@@ -244,7 +262,19 @@ public class Controlador
 		this.jfPrincipal.setVisible(true);
 	}
 	
-	public void validarIngresos (Persona persona) 
+	public boolean estadoTexto (String Dni) throws NoNumericoExcepcion {
+		
+		if(personaNegocio.contieneTextoElDni(Dni))
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+		
+	}
+	public void validarCamposNoVacios (Persona persona) 
 	{
 		int ContadorVacios = 0;
 		
