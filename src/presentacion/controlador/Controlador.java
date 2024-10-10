@@ -89,7 +89,7 @@ public class Controlador
 	}
 	
 	private void agregarPersona(ActionEvent a)
-	{  int ContadorVacios =0;
+	{ 
 		Persona persona = new Persona();
 		persona.setApellido(this.jpAltaPersona.getTxtApellido().getText());
 		persona.setNombre(this.jpAltaPersona.getTxtNombre().getText());
