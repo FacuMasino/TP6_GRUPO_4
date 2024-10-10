@@ -5,6 +5,8 @@ import java.awt.GridLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
+
 import java.awt.BorderLayout;
 import entidad.Persona;
 import entidad.PersonasListModel;
@@ -34,6 +36,7 @@ public class JPBajaPersona extends JPanel
 		panelCentral.setLayout(new BorderLayout(0, 0));
 		
 		btnEliminar = new JButton("Eliminar");
+		btnEliminar.setEnabled(false);
 		panelCentral.add(btnEliminar, BorderLayout.SOUTH);
 		
 		eliminarLbl = new JLabel("Eliminar usuarios");
@@ -57,5 +60,23 @@ public class JPBajaPersona extends JPanel
 		}
 
 		jlPersonas.setModel(this.personasLM);
+	}
+	
+	public void limpiarCampos()
+	{
+			btnEliminar.setEnabled(false);
+	}
+	
+	public JButton getBtnEliminar() {
+		return btnEliminar;
+	}
+	
+	public JList<Persona> getJlPersonas() {
+		return jlPersonas;
+	}
+	
+	public void mostrarMensaje(String msg)
+	{
+		JOptionPane.showMessageDialog(null, msg);
 	}
 }

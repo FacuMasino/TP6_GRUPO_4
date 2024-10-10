@@ -72,6 +72,16 @@ public class Controlador
 		// Modificar persona
 		this.jpModificarPersona.getBtnModificar().addActionListener
 		(a->evtClickBtn_Modificar(a));
+		
+		
+		// Configuración de eventos JPBajaPersona
+		
+		// Seleccion de persona
+		this.jpBajaPersona.getJlPersonas().addListSelectionListener
+		(a->evtJListValueChanged_Eliminar(a));                    
+		//Eliminar persona 
+		this.jpBajaPersona.getBtnEliminar().addActionListener
+		(a->evtClickBtn_Eliminar(a));
 	}
 	
 	private void agregarPersona(ActionEvent a)
@@ -167,6 +177,38 @@ public class Controlador
 		
 	}
 	
+	public void evtJListValueChanged_Eliminar(ListSelectionEvent e)
+	{
+		// Si aún no suelta el botón del mouse, salir del evento
+		// porque el valor seleccionado puede cambiar
+		if(e.getValueIsAdjusting()) return;
+		
+		Persona auxPersona = this.jpBajaPersona.getJlPersonas().getSelectedValue();
+		this.jpBajaPersona.getBtnEliminar().setEnabled(true);
+	
+	}
+	
+	public void evtClickBtn_Eliminar(ActionEvent a)
+	{
+		Persona personaSeleccionada = this.jpBajaPersona.getJlPersonas().getSelectedValue(); 
+	
+		
+		if(personaSeleccionada.getNombre().isEmpty() || personaSeleccionada.getNombre().isEmpty())
+		{
+			jpBajaPersona.mostrarMensaje("Debe seleccionar una persona");
+			return;
+		}
+		
+		if(!personaNegocio.eliminar(personaSeleccionada))
+		{
+			jpBajaPersona.mostrarMensaje("Ocurrió un problema, no se pudo eliminar la persona");
+			return;
+		}
+		
+		actualizarPersonasLM();
+		jpBajaPersona.limpiarCampos();
+		
+	}
 	private void actualizarPersonasLM()
 	{
 		personasLM.clear();
