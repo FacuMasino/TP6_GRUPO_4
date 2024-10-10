@@ -60,4 +60,11 @@ public class PersonaNegocioImpl implements PersonaNegocio
 	{	
 		return personaDao.readAll();
 	}
+
+	@Override
+	public boolean dniDisponible(Persona persona)
+	{
+		
+		return personaDao.dniDisponible(persona.getDni());
+	}
 }

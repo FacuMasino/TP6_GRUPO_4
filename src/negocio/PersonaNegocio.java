@@ -9,5 +9,6 @@ public interface PersonaNegocio
 	public boolean eliminar(Persona persona);
 	public boolean modificar(Persona persona);
 	public Persona obtenerPersona(String dni);
+	public boolean dniDisponible(Persona persona);
 	public List<Persona> readAll();
 }

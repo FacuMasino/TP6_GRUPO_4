@@ -2,6 +2,7 @@ package presentacion.controlador;
 
 import java.awt.event.ActionEvent;
 
+import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 
 import entidad.Persona;
@@ -24,6 +25,7 @@ public class Controlador
 	private PersonasListModel personasLM;
 	private PersonasTableModel personasTM;
 	private PersonaNegocio personaNegocio;
+	private JOptionPane message;
 	
 	public Controlador(JFPrincipal vista, PersonaNegocio negocio)
 	{
@@ -99,6 +101,16 @@ public class Controlador
 			this.jpAltaPersona.getTxtApellido().setText("");
 			this.jpAltaPersona.getTxtNombre().setText("");
 			this.jpAltaPersona.getTxtDni().setText("");
+			
+			JOptionPane.showMessageDialog(null, "Persona agregada exitosamente!", "Todo OK!", JOptionPane.INFORMATION_MESSAGE,null);
+		}
+		else if(!this.personaNegocio.dniDisponible(persona))
+		{
+			JOptionPane.showMessageDialog(null, "El documento ingresado ya existe..");
+		}
+		else
+		{
+			JOptionPane.showMessageDialog(null, "Ingrese todos los campos...");
 		}
 	}
 	
@@ -173,6 +185,9 @@ public class Controlador
 		}
 		
 		actualizarPersonasLM();
+		
+		JOptionPane.showMessageDialog(null, "Persona modificada exitosamente!", "Todo OK!", JOptionPane.INFORMATION_MESSAGE,null);
+		
 		jpModificarPersona.limpiarCampos();
 		
 	}
@@ -206,6 +221,9 @@ public class Controlador
 		}
 		
 		actualizarPersonasLM();
+		
+		JOptionPane.showMessageDialog(null, "Persona eliminada exitosamente!", "Todo OK!", JOptionPane.INFORMATION_MESSAGE,null);
+		
 		jpBajaPersona.limpiarCampos();
 		
 	}

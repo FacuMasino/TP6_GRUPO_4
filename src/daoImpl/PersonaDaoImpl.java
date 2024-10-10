@@ -5,6 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+
+import javax.swing.JOptionPane;
+
 import dao.PersonaDao;
 import entidad.Persona;
 
@@ -15,6 +18,7 @@ public class PersonaDaoImpl implements PersonaDao
 	private String deleteQry;
 	private String readAllQry;
 	private String obtenerQry;
+	private String selectDniQry;
 	
 	public PersonaDaoImpl()
 	{
@@ -23,6 +27,7 @@ public class PersonaDaoImpl implements PersonaDao
 		deleteQry = "DELETE from Personas WHERE Dni = ?";
 		readAllQry = "SELECT * FROM Personas";
 		obtenerQry = "SELECT * FROM Personas WHERE Dni = ?";
+		selectDniQry = "SELECT * FROM Personas Where Dni = ?";
 	}
 	
 	@Override
@@ -47,6 +52,7 @@ public class PersonaDaoImpl implements PersonaDao
 		catch(Exception exception)
 		{
 			exception.printStackTrace();
+			return false;
 		}
 		
 		return (rows > 0);
@@ -63,7 +69,7 @@ public class PersonaDaoImpl implements PersonaDao
 		{
 			Conexion conexion = new Conexion();
 			conn = conexion.getSQLConexion();
-			pstmt = conn.prepareStatement(deleteQry);
+			pstmt = conn.prepareStatement(selectDniQry);
 			
 			pstmt.setString(1, persona.getDni());
 			
@@ -166,5 +172,41 @@ public class PersonaDaoImpl implements PersonaDao
 		String nombre = resultSet.getString("Nombre");
 		String apellido = resultSet.getString("Apellido");
 		return new Persona(dni, nombre, apellido);
+	}
+
+	@Override
+	public boolean dniDisponible(String dni) 
+	{
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet resultSet = null;
+		ArrayList<Persona> personas = new ArrayList<Persona>();
+		
+		try
+		{
+			Conexion conexion = new Conexion();
+			conn = conexion.getSQLConexion();
+			pstmt = conn.prepareStatement(selectDniQry);
+			
+			pstmt.setString(1,dni);
+			
+			resultSet = pstmt.executeQuery();
+			
+			while(resultSet.next())
+			{
+				personas.add(getPersona(resultSet));
+			}
+		}
+		catch(Exception exception)
+		{
+			exception.printStackTrace();
+			
+		}
+		
+		if(personas.isEmpty())
+		{
+			return true;
+		}
+		return false;
 	}
 }

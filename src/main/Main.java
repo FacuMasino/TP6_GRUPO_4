@@ -28,8 +28,14 @@ public class Main {
 		{
 			System.out.println(aux.toString() + "\n");
 		}
-		System.out.println("\n\nBuscaste a la persona con DNI 123456789:\n");
-		System.out.println(personaDao.obtenerPersona("123456789").toString());
+		/*
+		System.out.println(personaDao.dniDisponible("1"));
+		System.out.println(personaDao.dniDisponible("11"));
+		System.out.println(personaDao.dniDisponible("2"));
+		System.out.println(personaDao.dniDisponible("45000"));
+		*/
+		//System.out.println("\n\nBuscaste a la persona con DNI 123456789:\n");
+		//System.out.println(personaDao.obtenerPersona("123456789").toString());
 
 	}
 }

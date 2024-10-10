@@ -38,6 +38,7 @@ public class JPListarPersonas extends JPanel
         // JTable
         
         personasJTable = new JTable();
+        
         personasJScroll = new JScrollPane(personasJTable);
         add(personasJScroll, BorderLayout.CENTER);
     }
