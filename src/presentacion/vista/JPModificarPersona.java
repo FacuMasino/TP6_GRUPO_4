@@ -6,12 +6,15 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import entidad.Persona;
 import entidad.PersonasListModel;
 import javax.swing.JButton;
 import java.awt.Font;
 import java.awt.GridLayout;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.event.ListSelectionEvent;
 
 public class JPModificarPersona extends JPanel
 {
@@ -34,6 +37,7 @@ public class JPModificarPersona extends JPanel
 		add(JPMain);
 		
 		jlPersonas = new JList<Persona>();
+		
 		jlPersonas.setFont(new Font("Tahoma", Font.BOLD, 11));
 		
 		JPFields = new JPanel();
@@ -99,7 +103,41 @@ public class JPModificarPersona extends JPanel
 		{
 			this.personasLM = new PersonasListModel();
 		}
-
+		
 		jlPersonas.setModel(this.personasLM);
 	}
+	
+	public void mostrarMensaje(String msg)
+	{
+		JOptionPane.showMessageDialog(null, msg);
+	}
+	
+	public void limpiarCampos()
+	{
+		txtNombre.setText("");
+		txtApellido.setText("");
+		txtDNI.setText("");
+		btnModificar.setEnabled(false);
+	}
+
+	public JList<Persona> getJlPersonas() {
+		return jlPersonas;
+	}
+	
+	public JTextField getTxtNombre() {
+		return txtNombre;
+	}
+
+	public JTextField getTxtApellido() {
+		return txtApellido;
+	}
+
+	public JTextField getTxtDNI() {
+		return txtDNI;
+	}
+
+	public JButton getBtnModificar() {
+		return btnModificar;
+	}
+	
 }

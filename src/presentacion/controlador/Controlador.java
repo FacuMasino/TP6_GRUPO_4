@@ -1,6 +1,9 @@
 package presentacion.controlador;
 
 import java.awt.event.ActionEvent;
+
+import javax.swing.event.ListSelectionEvent;
+
 import entidad.Persona;
 import entidad.PersonasListModel;
 import entidad.PersonasTableModel;
@@ -38,13 +41,11 @@ public class Controlador
 		this.personasLM = new PersonasListModel();
 		this.personasTM = new PersonasTableModel();
 		
-		// Configuración de eventos
+		// Configuración de eventos Menu
 		
 		// Panel Alta
 		this.jfPrincipal.getMnuItemAgregar().addActionListener
 		(a->evtClickMenu_Agregar(a));
-		
-		this.jpAltaPersona.getBtnAceptar().addActionListener(a -> agregarPersona(a));
 		
 		// Panel Baja
 		this.jfPrincipal.getMnuItemEliminar().addActionListener
@@ -57,6 +58,20 @@ public class Controlador
 		// Panel Listar
 		this.jfPrincipal.getMnuItemListar().addActionListener
 		(a->evtClickMenu_Listar(a));
+		
+		// Configuración de eventos JPAltaPersona
+		
+		this.jpAltaPersona.getBtnAceptar().addActionListener
+		(a -> agregarPersona(a));
+		
+		// Configuración de eventos JPModificarPersona
+		
+		// Seleccion de persona
+		this.jpModificarPersona.getJlPersonas().addListSelectionListener
+		(a->evtJListValueChanged_Modificar(a));
+		// Modificar persona
+		this.jpModificarPersona.getBtnModificar().addActionListener
+		(a->evtClickBtn_Modificar(a));
 	}
 	
 	private void agregarPersona(ActionEvent a)
@@ -65,10 +80,16 @@ public class Controlador
 		persona.setApellido(this.jpAltaPersona.getTxtApellido().getText());
 		persona.setNombre(this.jpAltaPersona.getTxtNombre().getText());
 		persona.setDni(this.jpAltaPersona.getTxtDni().getText());
-		this.personaNegocio.agregar(persona);
-		this.jpAltaPersona.getTxtApellido().setText("");
-		this.jpAltaPersona.getTxtNombre().setText("");
-		this.jpAltaPersona.getTxtDni().setText("");
+		
+		// Si se pudo agregar la persona, se debe actualizar el ListModel
+		// y limpiar campos
+		if(this.personaNegocio.agregar(persona))
+		{
+			actualizarPersonasLM();
+			this.jpAltaPersona.getTxtApellido().setText("");
+			this.jpAltaPersona.getTxtNombre().setText("");
+			this.jpAltaPersona.getTxtDni().setText("");
+		}
 	}
 	
 	private void evtClickMenu_Agregar(ActionEvent a)
@@ -91,6 +112,7 @@ public class Controlador
 	private void evtClickMenu_Modificar(ActionEvent a)
 	{
 		this.jfPrincipal.getContentPane().removeAll();
+		if(personasLM.getSize() == 0) personasLM.addElements(personaNegocio.readAll());
 		jpModificarPersona.setPersonasListModel(personasLM);
 		this.jfPrincipal.getContentPane().add(jpModificarPersona);
 		this.jfPrincipal.getContentPane().repaint();
@@ -105,10 +127,55 @@ public class Controlador
 		this.jfPrincipal.getContentPane().add(jpListarPersonas);
 		this.jfPrincipal.getContentPane().repaint();
 		this.jfPrincipal.getContentPane().revalidate();	
-	}	
+	}
+	
+	public void evtJListValueChanged_Modificar(ListSelectionEvent e)
+	{
+		// Si aún no suelta el botón del mouse, salir del evento
+		// porque el valor seleccionado puede cambiar
+		if(e.getValueIsAdjusting()) return;
+		
+		Persona auxPersona = this.jpModificarPersona.getJlPersonas().getSelectedValue();
+		this.jpModificarPersona.getBtnModificar().setEnabled(true);
+		this.jpModificarPersona.getTxtNombre().setText(auxPersona.getNombre());
+		this.jpModificarPersona.getTxtApellido().setText(auxPersona.getApellido());
+		this.jpModificarPersona.getTxtDNI().setText(auxPersona.getDni());
+	}
 
+	public void evtClickBtn_Modificar(ActionEvent a)
+	{
+		Persona personaSeleccionada = this.jpModificarPersona.getJlPersonas().getSelectedValue(); 
+		Persona personaModificada = new Persona();
+		personaModificada.setDni(personaSeleccionada.getDni());
+		personaModificada.setNombre(this.jpModificarPersona.getTxtNombre().getText());
+		personaModificada.setApellido(this.jpModificarPersona.getTxtApellido().getText());
+		
+		if(personaModificada.getNombre().isEmpty() || personaModificada.getNombre().isEmpty())
+		{
+			jpModificarPersona.mostrarMensaje("Debe completar todos los campos");
+			return;
+		}
+		
+		if(!personaNegocio.modificar(personaModificada))
+		{
+			jpModificarPersona.mostrarMensaje("Ocurrió un problema, no se pudo modificar la persona");
+			return;
+		}
+		
+		actualizarPersonasLM();
+		jpModificarPersona.limpiarCampos();
+		
+	}
+	
+	private void actualizarPersonasLM()
+	{
+		personasLM.clear();
+		personasLM.addElements(personaNegocio.readAll());
+	}
+	
 	public void inicializar()
 	{
 		this.jfPrincipal.setVisible(true);
 	}
+	
 }

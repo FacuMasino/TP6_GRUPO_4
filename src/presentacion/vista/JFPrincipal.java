@@ -18,14 +18,12 @@ public class JFPrincipal extends JFrame
 	private JMenuItem mnuItemModificar;
 	private JMenuItem mnuItemEliminar;
 	private JMenuItem mnuItemListar;
-	private JPAltaPersona altaPersona;
-	private JPBajaPersona bajaPersona;
 
 	public JFPrincipal()
 	{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("Programa");
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 450, 310);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
