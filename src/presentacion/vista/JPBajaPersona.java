@@ -62,7 +62,7 @@ public class JPBajaPersona extends JPanel
 		jlPersonas.setModel(this.personasLM);
 	}
 	
-	public void limpiarCampos()
+	public void congelarBoton()
 	{
 			btnEliminar.setEnabled(false);
 	}

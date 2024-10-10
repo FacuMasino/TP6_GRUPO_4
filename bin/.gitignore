@@ -1,7 +1,6 @@
-/presentacion/
-/entidad/
-/negocio/
+/dao/
+/daoImpl/
 /negocioImpl/
 /main/
-/daoImpl/
-/dao/
+/negocio/
+/presentacion/

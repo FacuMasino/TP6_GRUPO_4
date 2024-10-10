@@ -8,10 +8,10 @@ import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
-import dao.PersonaDao;
+import dao.IPersonaDao;
 import entidad.Persona;
 
-public class PersonaDaoImpl implements PersonaDao
+public class PersonaDaoImpl implements IPersonaDao
 {
 	private String insertQry;
 	private String modifyQry;
@@ -44,8 +44,8 @@ public class PersonaDaoImpl implements PersonaDao
 			pstmt = conn.prepareStatement(insertQry);
 			
 			pstmt.setString(1, persona.getDni());
-			pstmt.setString(2, persona.getNombre());
-			pstmt.setString(3, persona.getApellido());
+			pstmt.setString(2, persona.getNombre(). toUpperCase());
+			pstmt.setString(3, persona.getApellido(). toUpperCase());
 			
 			rows = pstmt.executeUpdate();
 		}
@@ -69,7 +69,7 @@ public class PersonaDaoImpl implements PersonaDao
 		{
 			Conexion conexion = new Conexion();
 			conn = conexion.getSQLConexion();
-			pstmt = conn.prepareStatement(selectDniQry);
+			pstmt = conn.prepareStatement(deleteQry);
 			
 			pstmt.setString(1, persona.getDni());
 			
@@ -96,8 +96,8 @@ public class PersonaDaoImpl implements PersonaDao
 			conn = conexion.getSQLConexion();
 			pstmt = conn.prepareStatement(modifyQry);
 			
-			pstmt.setString(1, persona.getNombre());
-			pstmt.setString(2, persona.getApellido());
+			pstmt.setString(1, persona.getNombre().toUpperCase());
+			pstmt.setString(2, persona.getApellido().toUpperCase());
 			pstmt.setString(3, persona.getDni());
 			
 			rows = pstmt.executeUpdate();

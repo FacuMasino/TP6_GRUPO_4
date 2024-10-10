@@ -1,14 +1,14 @@
 package negocioImpl;
 
 import java.util.List;
-import dao.PersonaDao;
+import dao.IPersonaDao;
 import daoImpl.PersonaDaoImpl;
 import entidad.Persona;
-import negocio.PersonaNegocio;
+import negocio.IPersonaNegocio;
 
-public class PersonaNegocioImpl implements PersonaNegocio
+public class PersonaNegocioImpl implements IPersonaNegocio
 {	
-	PersonaDao personaDao = new PersonaDaoImpl();
+	IPersonaDao personaDao = new PersonaDaoImpl();
 
 	@Override
 	public boolean agregar(Persona persona)

@@ -8,7 +8,7 @@ import javax.swing.event.ListSelectionEvent;
 import entidad.Persona;
 import entidad.PersonasListModel;
 import entidad.PersonasTableModel;
-import negocio.PersonaNegocio;
+import negocio.IPersonaNegocio;
 import presentacion.vista.JFPrincipal;
 import presentacion.vista.JPAltaPersona;
 import presentacion.vista.JPBajaPersona;
@@ -24,10 +24,10 @@ public class Controlador
 	private JPModificarPersona jpModificarPersona;
 	private PersonasListModel personasLM;
 	private PersonasTableModel personasTM;
-	private PersonaNegocio personaNegocio;
+	private IPersonaNegocio personaNegocio;
 	private JOptionPane message;
 	
-	public Controlador(JFPrincipal vista, PersonaNegocio negocio)
+	public Controlador(JFPrincipal vista, IPersonaNegocio negocio)
 	{
 		// Panel Principal
 		this.jfPrincipal = vista;
@@ -87,7 +87,7 @@ public class Controlador
 	}
 	
 	private void agregarPersona(ActionEvent a)
-	{
+	{  int ContadorVacios =0;
 		Persona persona = new Persona();
 		persona.setApellido(this.jpAltaPersona.getTxtApellido().getText());
 		persona.setNombre(this.jpAltaPersona.getTxtNombre().getText());
@@ -96,23 +96,26 @@ public class Controlador
 		// Si se pudo agregar la persona, se debe actualizar el ListModel
 		// y limpiar campos
 		if(this.personaNegocio.agregar(persona))
-		{
+			{
 			actualizarPersonasLM();
 			this.jpAltaPersona.getTxtApellido().setText("");
 			this.jpAltaPersona.getTxtNombre().setText("");
 			this.jpAltaPersona.getTxtDni().setText("");
 			
-			JOptionPane.showMessageDialog(null, "Persona agregada exitosamente!", "Todo OK!", JOptionPane.INFORMATION_MESSAGE,null);
-		}
-		else if(!this.personaNegocio.dniDisponible(persona))
-		{
-			JOptionPane.showMessageDialog(null, "El documento ingresado ya existe..");
-		}
-		else
-		{
-			JOptionPane.showMessageDialog(null, "Ingrese todos los campos...");
-		}
+			JOptionPane.showMessageDialog(null, "¡Persona agregada exitosamente!", "Todo OK!", JOptionPane.INFORMATION_MESSAGE,null);
+			}
+			else if(!this.personaNegocio.dniDisponible(persona))
+				{
+					JOptionPane.showMessageDialog(null, "El documento ingresado ya existe..." ,"Error", JOptionPane.ERROR_MESSAGE);
+				}
+				else 
+					{ 
+						validarIngresos(persona);
+					}
+		
 	}
+	
+
 	
 	private void evtClickMenu_Agregar(ActionEvent a)
 	{
@@ -125,6 +128,7 @@ public class Controlador
 	private void evtClickMenu_Baja(ActionEvent a)
 	{
 		this.jfPrincipal.getContentPane().removeAll();
+		if(personasLM.getSize() == 0) personasLM.addElements(personaNegocio.readAll());
 		jpBajaPersona.setPersonasListModel(personasLM);
 		this.jfPrincipal.getContentPane().add(jpBajaPersona);
 		this.jfPrincipal.getContentPane().repaint();
@@ -207,24 +211,19 @@ public class Controlador
 	{
 		Persona personaSeleccionada = this.jpBajaPersona.getJlPersonas().getSelectedValue(); 
 	
-		
-		if(personaSeleccionada.getNombre().isEmpty() || personaSeleccionada.getNombre().isEmpty())
+			
+		if(personaNegocio.eliminar(personaSeleccionada))
 		{
-			jpBajaPersona.mostrarMensaje("Debe seleccionar una persona");
-			return;
+			jpBajaPersona.mostrarMensaje("Persona eliminada exitosamente");
+			actualizarPersonasLM();
+			jpBajaPersona.congelarBoton();
+		}
+		else
+		{
+			JOptionPane.showMessageDialog(null, "Error al eliminar persona.." ,"Error", JOptionPane.ERROR_MESSAGE);
 		}
 		
-		if(!personaNegocio.eliminar(personaSeleccionada))
-		{
-			jpBajaPersona.mostrarMensaje("Ocurrió un problema, no se pudo eliminar la persona");
-			return;
-		}
-		
-		actualizarPersonasLM();
-		
-		JOptionPane.showMessageDialog(null, "Persona eliminada exitosamente!", "Todo OK!", JOptionPane.INFORMATION_MESSAGE,null);
-		
-		jpBajaPersona.limpiarCampos();
+
 		
 	}
 	private void actualizarPersonasLM()
@@ -236,6 +235,36 @@ public class Controlador
 	public void inicializar()
 	{
 		this.jfPrincipal.setVisible(true);
+	}
+	
+	public void validarIngresos (Persona persona) 
+	{
+		int ContadorVacios = 0;
+		
+		if (this.jpAltaPersona.getTxtNombre().getText().equals("")) 
+		{ 
+			ContadorVacios= ContadorVacios+1;
+		}
+		
+		if ( this.jpAltaPersona.getTxtDni().getText().equals(""))
+		{ 
+			ContadorVacios= ContadorVacios+1;
+		}
+		
+		if (this.jpAltaPersona.getTxtApellido().getText().equals(""))
+		{ 
+			ContadorVacios= ContadorVacios+1;
+		}
+		 
+		if (ContadorVacios == 1)
+		{
+			JOptionPane.showMessageDialog(null, "¡Ingrese el campo faltante!", "Error",JOptionPane.ERROR_MESSAGE);
+		}
+		else 
+		{
+			JOptionPane.showMessageDialog(null, "¡Ingrese los campos faltantes!", "Error",JOptionPane.ERROR_MESSAGE); 
+		}
+		
 	}
 	
 }

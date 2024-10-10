@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import daoImpl.PersonaDaoImpl;
 import entidad.Persona;
-import negocio.PersonaNegocio;
+import negocio.IPersonaNegocio;
 import negocioImpl.PersonaNegocioImpl;
 import presentacion.controlador.Controlador;
 import presentacion.vista.JFPrincipal;
@@ -15,7 +15,7 @@ public class Main {
 	public static void main(String[] args)
 	{
 		JFPrincipal vista = new JFPrincipal();
-		PersonaNegocio negocio = new PersonaNegocioImpl();
+		IPersonaNegocio negocio = new PersonaNegocioImpl();
 		Controlador controlador = new Controlador(vista, negocio);
 		controlador.inicializar();
 		
