@@ -23,6 +23,8 @@ public class JPBajaPersona extends JPanel
 	private JLabel eliminarLbl; 
 	private JButton btnEliminar;
 	
+	
+
 	public JPBajaPersona()
 	{	
 		setLayout(new GridLayout(1, 1, 0, 0));
@@ -48,8 +50,11 @@ public class JPBajaPersona extends JPanel
 		
 		panelDerecho = new JPanel();
 		add(panelDerecho);
+		
+		
 	}
 	
+
 	public void setPersonasListModel(PersonasListModel personasLM)
 	{
 		this.personasLM = personasLM;

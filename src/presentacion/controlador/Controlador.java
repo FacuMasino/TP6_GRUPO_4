@@ -52,6 +52,7 @@ public class Controlador
 		// Panel Baja
 		this.jfPrincipal.getMnuItemEliminar().addActionListener
 		(a->evtClickMenu_Baja(a));
+		
 	
 		// Panel Modificar
 		this.jfPrincipal.getMnuItemModificar().addActionListener
@@ -84,6 +85,7 @@ public class Controlador
 		//Eliminar persona 
 		this.jpBajaPersona.getBtnEliminar().addActionListener
 		(a->evtClickBtn_Eliminar(a));
+		
 	}
 	
 	private void agregarPersona(ActionEvent a)
@@ -114,9 +116,7 @@ public class Controlador
 					}
 		
 	}
-	
-
-	
+		
 	private void evtClickMenu_Agregar(ActionEvent a)
 	{
 		this.jfPrincipal.getContentPane().removeAll();
@@ -132,7 +132,8 @@ public class Controlador
 		jpBajaPersona.setPersonasListModel(personasLM);
 		this.jfPrincipal.getContentPane().add(jpBajaPersona);
 		this.jfPrincipal.getContentPane().repaint();
-		this.jfPrincipal.getContentPane().revalidate();	
+		this.jfPrincipal.getContentPane().revalidate();		
+		
 	}
 	
 	private void evtClickMenu_Modificar(ActionEvent a)
@@ -209,23 +210,29 @@ public class Controlador
 	
 	public void evtClickBtn_Eliminar(ActionEvent a)
 	{
+		
 		Persona personaSeleccionada = this.jpBajaPersona.getJlPersonas().getSelectedValue(); 
+		
 	
-			
 		if(personaNegocio.eliminar(personaSeleccionada))
 		{
 			jpBajaPersona.mostrarMensaje("Persona eliminada exitosamente");
 			actualizarPersonasLM();
-			jpBajaPersona.congelarBoton();
+			
 		}
 		else
 		{
 			JOptionPane.showMessageDialog(null, "Error al eliminar persona.." ,"Error", JOptionPane.ERROR_MESSAGE);
 		}
 		
-
+		if (personasLM.getSize() == 0)
+		{
+			JOptionPane.showMessageDialog(null, "No hay más personas en la lista" ,"Error", JOptionPane.ERROR_MESSAGE);
+		}
 		
+	
 	}
+		
 	private void actualizarPersonasLM()
 	{
 		personasLM.clear();
