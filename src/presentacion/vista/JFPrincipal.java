@@ -7,6 +7,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 
 public class JFPrincipal extends JFrame
 {
@@ -67,5 +68,9 @@ public class JFPrincipal extends JFrame
 	public JMenuItem getMnuItemListar()
 	{
 		return mnuItemListar;
+	}
+	
+	public void mostrarMensaje(String msg, int jOptionType) {
+		JOptionPane.showMessageDialog(null, msg, "Mensaje", jOptionType,null);
 	}
 }

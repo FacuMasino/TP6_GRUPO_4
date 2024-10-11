@@ -2,6 +2,8 @@ package presentacion.controlador;
 
 import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
@@ -10,6 +12,8 @@ import entidad.Persona;
 import entidad.PersonasListModel;
 import entidad.PersonasTableModel;
 import negocio.IPersonaNegocio;
+import negocioImpl.DNINoDisponibleExcepcion;
+import negocioImpl.NoCaracterExcepcion;
 import negocioImpl.NoNumericoExcepcion;
 import presentacion.vista.JFPrincipal;
 import presentacion.vista.JPAltaPersona;
@@ -67,15 +71,29 @@ public class Controlador
 		// Configuración de eventos JPAltaPersona
 		
 		this.jpAltaPersona.getBtnAceptar().addActionListener
-		(a -> {
-			try {
-				agregarPersona(a);
-			} catch (HeadlessException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (NoNumericoExcepcion e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+		(a -> agregarPersona(a));
+		
+		this.jpAltaPersona.getTxtDni().addKeyListener
+		(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				evtKeyTyped_SoloDigitos(e);
+			}
+		});
+		
+		this.jpAltaPersona.getTxtApellido().addKeyListener
+		(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				evtKeyTyped_SoloLetras(e);
+			}
+		});
+		
+		this.jpAltaPersona.getTxtNombre().addKeyListener
+		(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				evtKeyTyped_SoloLetras(e);
 			}
 		});
 		
@@ -100,7 +118,7 @@ public class Controlador
 		
 	}
 	
-	private void agregarPersona(ActionEvent a) throws HeadlessException, NoNumericoExcepcion
+	private void agregarPersona(ActionEvent a)
 	{ 
 		Persona persona = new Persona();
 		persona.setApellido(this.jpAltaPersona.getTxtApellido().getText());
@@ -109,30 +127,34 @@ public class Controlador
 		
 		String Dni = jpAltaPersona.getTxtDni().getText();
 		
+		if(hayCamposVacios(persona)) return;
+		
 		// Si se pudo agregar la persona, se debe actualizar el ListModel
 		// y limpiar campos
-		if(this.personaNegocio.agregar(persona))
+		try
+		{
+			if(this.personaNegocio.agregar(persona))
 			{
-			actualizarPersonasLM();
-			this.jpAltaPersona.getTxtApellido().setText("");
-			this.jpAltaPersona.getTxtNombre().setText("");
-			this.jpAltaPersona.getTxtDni().setText("");
-			
-			JOptionPane.showMessageDialog(null, "¡Persona agregada exitosamente!", "Todo OK!", JOptionPane.INFORMATION_MESSAGE,null);
+				actualizarPersonasLM();
+				this.jpAltaPersona.getTxtApellido().setText("");
+				this.jpAltaPersona.getTxtNombre().setText("");
+				this.jpAltaPersona.getTxtDni().setText("");
+				
+				JOptionPane.showMessageDialog(null, "¡Persona agregada exitosamente!", "Todo OK!", JOptionPane.INFORMATION_MESSAGE,null);
 			}
+		}
+		catch (NoCaracterExcepcion | NoNumericoExcepcion e)
+		{
+			jfPrincipal.mostrarMensaje(e.getMessage(),JOptionPane.ERROR_MESSAGE);
+		}
+		catch (DNINoDisponibleExcepcion e) {
+			jfPrincipal.mostrarMensaje(e.getMessage(), JOptionPane.WARNING_MESSAGE);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			jfPrincipal.mostrarMensaje("Ocurrio un error inesperado al agregar la persona", JOptionPane.ERROR_MESSAGE);
+		}
 		
-			else if(!this.personaNegocio.dniDisponible(persona))
-				{
-					JOptionPane.showMessageDialog(null, "El documento ingresado ya existe..." ,"Error", JOptionPane.ERROR_MESSAGE);
-				}
-				else if (estadoTexto(Dni))
-					{
-						JOptionPane.showMessageDialog(null, "El DNI no puede contener valores no numericos" ,"Error", JOptionPane.ERROR_MESSAGE);
-					}
-					else 
-						{  
-							validarCamposNoVacios(persona);
-						}
 	}
 		
 	private void evtClickMenu_Agregar(ActionEvent a)
@@ -250,6 +272,24 @@ public class Controlador
 		
 	
 	}
+	
+	private void evtKeyTyped_SoloDigitos(KeyEvent e)
+	{
+		char caracter = e.getKeyChar();
+		if (((caracter < '0') || (caracter > '9')) && (caracter != KeyEvent.VK_BACK_SPACE)
+		&& (caracter != '.') ) 
+		{
+			e.consume();
+		}
+	}
+	
+	private void evtKeyTyped_SoloLetras(KeyEvent e) {
+	    char caracter = e.getKeyChar();
+	    if (!Character.isLetter(caracter) && 
+	        caracter != KeyEvent.VK_BACK_SPACE) {
+	        e.consume();
+	    }
+	}
 		
 	private void actualizarPersonasLM()
 	{
@@ -262,19 +302,7 @@ public class Controlador
 		this.jfPrincipal.setVisible(true);
 	}
 	
-	public boolean estadoTexto (String Dni) throws NoNumericoExcepcion {
-		
-		if(personaNegocio.contieneTextoElDni(Dni))
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
-		
-	}
-	public void validarCamposNoVacios (Persona persona) 
+	public boolean hayCamposVacios (Persona persona) 
 	{
 		int ContadorVacios = 0;
 		
@@ -292,6 +320,8 @@ public class Controlador
 		{ 
 			ContadorVacios= ContadorVacios+1;
 		}
+		
+		if(ContadorVacios == 0) return false;
 		 
 		if (ContadorVacios == 1)
 		{
@@ -301,6 +331,8 @@ public class Controlador
 		{
 			JOptionPane.showMessageDialog(null, "¡Ingrese los campos faltantes!", "Error",JOptionPane.ERROR_MESSAGE); 
 		}
+		
+		return true;
 		
 	}
 	

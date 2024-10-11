@@ -11,13 +11,27 @@ public class PersonaNegocioImpl implements IPersonaNegocio
 	IPersonaDao personaDao = new PersonaDaoImpl();
 
 	@Override
-	public boolean agregar(Persona persona)
+	public boolean agregar(Persona persona) throws NoCaracterExcepcion, NoNumericoExcepcion, DNINoDisponibleExcepcion
 	{
 		boolean estado=false;
-		//String Dni = persona.getDni();
 		
 			if(persona.getNombre().trim().length()>0 && persona.getApellido().trim().length()>0 && persona.getDni().trim().length()>0 )
 			{
+				if(!verificarSoloLetras(persona.getApellido())
+			    || !verificarSoloLetras(persona.getNombre()))
+				{
+					throw new NoCaracterExcepcion();
+				}
+				
+				if(contieneTextoElDni(persona.getDni()))
+				{
+					throw new NoNumericoExcepcion();
+				}
+				
+				if(!dniDisponible(persona)) {
+					throw new DNINoDisponibleExcepcion();
+				}
+				
 				estado=personaDao.agregar(persona);
 			}
 
@@ -87,17 +101,21 @@ public class PersonaNegocioImpl implements IPersonaNegocio
 			throw exc1;
 		}
 		
-		if (auxTexto)
-		{
-			return true;
-		}
-		
-		else
-		{
-			return false; 
-		}
+		return false;
 	
 	}
 	
+	public boolean verificarSoloLetras(String texto)
+	{
+	    for (int i = 0; i < texto.length(); i++)
+	    {
+	        char caracter = texto.charAt(i);
+	        // Verifica si el carácter no es una letra
+	        if (!Character.isLetter(caracter)) {
+	            return false;
+	        }
+	    }
+	    return true;
+	}
 	
 }
